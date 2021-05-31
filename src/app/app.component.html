@@ -6,18 +6,71 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.5">
   <title>{GetTitle()}</title>
+  <style>
+    input {
+      width: 70%;
+    }
+    textarea{
+      width: 80%;
+      height: 40rem;
+    }
+  </style>
 </head>
 
 <body>
 
+  <label for="">TOKEN</label>
+  <input type="text" [value]="token_value" #token>
+  <div></div>
+  <label for=""> REFRESH TOKEN</label>
+  <input type="text" [value]="refresh_token" #refreshToken>
+
+  <p></p>
+  <!-- GET REQUEST -->
+  <input #text_url_GET type="text"
+  value='http://94.74.69.84/ws/huixquilucantd/trasladodominio/consultas/propietario?usuario=ANGEL&accion=nuevo_propietario'>
+  <button (click)="peticionGet(text_url_GET.value, token.value)">Go</button>
+  <!-- REFRESH TOKEN -->
+
+  <label for="url-label">
+  </label>
+  <input #text_url_refresh type="text"
+    value='http://genusserver.com/ws/gnsaplication/login/auth_refresh'>
+
+  <button (click)="peticionRefreshAuth(text_url_refresh.value, token.value, refreshToken.value)">Go</button>
+  <!-- <div>{{GetData()}}</div> -->
+
+  <!-- LOGIN -->
+
   <label for="url-label"></label>
-  <input #text_url type="text" name="url-label" id="text-url" value='https://localhost:44301/trasladodominio/solicitudes?usuario=angel&accion=busqueda_solicitudes&offset=0&limit=10&tipo_busqueda=&valor'>
+  <input #text_url_login type="text"
+    value='http://genusserver.com/ws/gnsaplication/login/auth'>
 
-  <button (click)="DoGetRequest(text_url.value)">Go</button>
+  <button (click)="peticionLogin(text_url_login.value)">Go</button>
 
-  <p>Que tal</p>
+  <!-- POST JSON -->
 
-  <div>{{GetData()}}</div>
+  <label for="url-label"></label>
+  <input #text_url_post type="text"
+    value='http://94.74.69.84/ws/huixquilucantd/predial/descuentos_configurados'>
+
+  <button (click)="PeticionPostJSON(text_url_post.value, token.value)">Go</button>
+
+<p></p>
+  <textarea #result [value]="_data | json"></textarea>
+
+
+  <tr></tr>
+
+  <input #archivo type="file" id="file" accept="image/*" width="300" height="300" (change)="upload($event)"/>
+  <!-- <textarea name="xd" id="xd" cols="100" rows="50"></textarea>
+
+
+  <button (click)="{CopytoClipboard()}">Copy to Clipboard</button>
+  <button (click)="{DownloadByteArray()}">Download</button>
+ -->
+ <textarea #result [value]="byteArray.toString()"></textarea>
+
 
 </body>
 

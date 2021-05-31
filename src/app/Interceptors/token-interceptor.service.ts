@@ -13,7 +13,7 @@ export class TokenInterceptorService implements HttpInterceptor {
     Observable<HttpEvent<any>> {
 
     console.log('Iniciando Token Interceptor Service...')
-    let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb3JyZW9fZWxlY3Ryb25pY28iOiJBTkdFTDE5QEdNQUlMLkNPTSIsIm5vbWJyZV9jb21wbGV0byI6IkpPU0UgQU5HRUwgSEVSTkFOREVaIiwidXNlcm5hbWUiOiJBTkdFTDE5Iiwicm9sZSI6IltcIlJPTEVfVFJBU0xBRE9cIl0iLCJuYmYiOjE2MTY3OTQwODYsImV4cCI6MTYxNjc5NTg4NiwiaWF0IjoxNjE2Nzk0MDg2fQ.s_6lhGJz6J1y6A1Pc1otZNqqSqaDOKZOuc47W-3P8Ok'
+    let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb3JyZW9fZWxlY3Ryb25pY28iOiJBTkdFTDE5QEdNQUlMLkNPTSIsIm5vbWJyZV9jb21wbGV0byI6IkpPU0UgQU5HRUwgSEVSTkFOREVaIiwidXNlcm5hbWUiOiJBTkdFTDE5Iiwicm9sZSI6IltcIlJPTEVfVFJBU0xBRE9cIl0iLCJuYmYiOjE2MTcwNDgzNDEsImV4cCI6MTYxNzA1MDE0MSwiaWF0IjoxNjE3MDQ4MzQxfQ.RXTldB_-RCEXajLJTdCuxcQb2SoWan4m0ZEWtJSw1kA'
     if (token != null) {
       console.log(token);
       const authReq = req.clone({

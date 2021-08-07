@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import {
+  AfterViewInit, Component,
+  ElementRef, EventEmitter, Output, ViewChild
+} from '@angular/core';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
@@ -16,6 +19,11 @@ export class AppComponent {
 
   _url: string = '';
   _data: any;
+
+
+  @ViewChild('user') userInput: ElementRef;
+  @ViewChild('pass') passInput: ElementRef;
+
   constructor(private http: HttpClient) {
 
   }
@@ -68,14 +76,14 @@ export class AppComponent {
   peticionLogin(url: string, params?: HttpParams) {
     console.log('Iniciando Peticion Get!!!')
 
-    const body = JSON.stringify({
-      usuario: "ANGEL19",
-      password: "123456",
-      sistema: "TRASLADO"
-    });
+    // const body = JSON.stringify({
+    //   usuario: "ANGEL19",
+    //   password: "123456",
+    //   sistema: "TRASLADO"
+    // });
 
-    const body1 = new HttpParams().set('usuario', 'ALEJO')
-      .set('password', '123456')
+    const body1 = new HttpParams().set('usuario', this.userInput.nativeElement.value)
+      .set('password',  this.passInput.nativeElement.value)
       .set('sistema', "TRASLADO");
 
     return this.http.post(url, body1

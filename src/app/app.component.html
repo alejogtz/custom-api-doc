@@ -26,6 +26,11 @@
   <input type="text" [value]="refresh_token" #refreshToken>
 
   <p></p>
+  <label for="id-user">User: </label>
+  <input #user type="text" name="user" id="id-user">
+  <br>
+  <label for="id-user">Pass: </label>
+  <input #pass type="password" name="pass" id="id-pass">
   <!-- GET REQUEST -->
   <input #text_url_GET type="text"
   value='http://94.74.69.84/ws/huixquilucantd/trasladodominio/consultas/propietario?usuario=ANGEL&accion=nuevo_propietario'>
@@ -43,13 +48,18 @@
   <!-- LOGIN -->
 
   <label for="url-label"></label>
-  <input #text_url_login type="text"
-    value='http://genusserver.com/ws/gnsaplication/login/auth'>
+  <!-- <input #text_url_login type="text"
+    value='http://genusserver.com/ws/gnsaplication/login/auth'> -->
+
+  <select #text_url_login name="uris" id="">
+    <option value="http://genusserver.com/ws/gnsaplication/login/auth">Genus</option>
+    <option selected value="http://genusserver.com:8283/wsauthorization/saiglogin/auth">SAIG</option>
+  </select>
 
   <button (click)="peticionLogin(text_url_login.value)">Go</button>
 
   <!-- POST JSON -->
-
+<!-- 
   <label for="url-label"></label>
   <input #text_url_post type="text"
     value='http://94.74.69.84/ws/huixquilucantd/predial/descuentos_configurados'>
@@ -62,14 +72,14 @@
 
   <tr></tr>
 
-  <input #archivo type="file" id="file" accept="image/*" width="300" height="300" (change)="upload($event)"/>
+  <input #archivo type="file" id="file" accept="image/*" width="300" height="300" (change)="upload($event)"/> -->
   <!-- <textarea name="xd" id="xd" cols="100" rows="50"></textarea>
 
 
   <button (click)="{CopytoClipboard()}">Copy to Clipboard</button>
   <button (click)="{DownloadByteArray()}">Download</button>
  -->
- <textarea #result [value]="byteArray.toString()"></textarea>
+ <!-- <textarea #result [value]="byteArray.toString()"></textarea> -->
 
 
 </body>

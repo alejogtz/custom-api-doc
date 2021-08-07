@@ -18,21 +18,25 @@ export class AppComponent {
   refresh_token: string = '';
 
   _url: string = '';
-  _data: any;
+  _data: any = '';
 
 
   @ViewChild('user') userInput: ElementRef;
   @ViewChild('pass') passInput: ElementRef;
 
-  constructor(private http: HttpClient) {
+  usuario: string = '';
 
+  constructor(private http: HttpClient) {
+    this._data = JSON.parse('{"hola":"1234"}')
+    this.usuario = 'CONTRIBUYENTE_FISICO@HOTMAIL.COM'
+  }
+
+  UpdateUsuario(value: string) {
+    this.usuario = value;
   }
 
   GetTitle(): string {
     return this.title;
-  }
-  GetData(): string {
-    return this._data;
   }
   GetJson() {
     return this._data;
@@ -72,34 +76,52 @@ export class AppComponent {
         })).subscribe();
   }
 
-
   peticionLogin(url: string, params?: HttpParams) {
     console.log('Iniciando Peticion Get!!!')
 
-    // const body = JSON.stringify({
-    //   usuario: "ANGEL19",
-    //   password: "123456",
-    //   sistema: "TRASLADO"
-    // });
-
     const body1 = new HttpParams().set('usuario', this.userInput.nativeElement.value)
-      .set('password',  this.passInput.nativeElement.value)
+      .set('password', this.passInput.nativeElement.value)
       .set('sistema', "TRASLADO");
 
     return this.http.post(url, body1
     )
       .pipe(
         map((data: any) => {
-          console.log(url);
-          console.log(data);
-
-
           this.token_value = data['accesstoken'];
           this.refresh_token = data['refreshToken'];
 
-          this._data = data;
+          // this._data = data;
           return data;
         })).subscribe();
+  }
+GetData(){
+  return JSON.stringify(this._data, null, 2)
+}
+
+  ChangeData(){    
+    this._data = JSON.parse(`{
+      "modo_rollback":true,
+      "usuario":"ALEJO",
+      "accion":"NUEVO",
+      "descuento": {
+          "fecha_inicio": "03-02-2021",
+          "fecha_fin": "",
+          "permanente": "SI",
+          "clave": "AAB",
+          "oid_tipo_unidad": "1",
+          "descripcion": "TEST",
+          "descuento": "20",
+          "oid_justificacion": "1",
+          "oid_aplicar": "1",
+          "oid_usuario": "1",
+          "limite_inferior": "100",
+          "limite_superior": "999999",
+          "automatico": "SI",
+          "anio_inicio_desc": "2021",
+          "anio_fin_desc": "2021"
+      }
+  }`);
+  console.warn(this._data)
   }
 
 
@@ -145,40 +167,40 @@ export class AppComponent {
 
   //###########################################################################################################################
 
-  byteArray:any = []
-  convertDataURIToBinary(dataURI:any) {
+  byteArray: any = []
+  convertDataURIToBinary(dataURI: any) {
     var base64Index = dataURI.indexOf(';base64,') + ';base64,'.length;
     var base64 = dataURI.substring(base64Index);
     var raw = window.atob(base64);
     var rawLength = raw.length;
     var array = new Uint8Array(new ArrayBuffer(rawLength));
-  
-    for(let i = 0; i < rawLength; i++) {
+
+    for (let i = 0; i < rawLength; i++) {
       array[i] = raw.charCodeAt(i);
     }
     return array;
   }
-  
 
 
-  imagen:any = null;
+
+  imagen: any = null;
   upload(event: any) {
     console.log(event)
     const file = event.target.files[0];
     this.imagen = file
-    
+
     var me = this;
     const reader = new FileReader();
     // this.imagen = reader.readAsDataURL(file)
     // let byteArray;
-  
+
     reader.addEventListener("loadend", () => {
       // convert image file to base64 string
       //console.log('base64', reader.result);
       this.byteArray = me.convertDataURIToBinary(reader.result);
       // console.log('byte array', byteArray);
     }, false);
-  
+
     if (file) {
       reader.readAsDataURL(file);
     }

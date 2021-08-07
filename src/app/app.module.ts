@@ -13,9 +13,10 @@ import { TokenInterceptorService } from './Interceptors/token-interceptor.servic
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
+    
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]

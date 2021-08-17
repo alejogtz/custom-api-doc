@@ -2,7 +2,10 @@
     $ ng build -op dist/example
     $ ng build --output-path=dist/example
 
-    $ ng build --prod --base-href http://localhost/HttpRequests/ --deploy-url http://localhost/HttpRequests/ --output-path=/c/IISApps/HttpRequests
+    $ ng build --prod \
+      --base-href http://localhost/HttpRequests/ \
+      --deploy-url http://localhost/HttpRequests/ \
+      --output-path=/c/IISApps/HttpRequests
 
 `--base-href` indica la url base para nuestras paginas de nuestra aplicacion, y `--deploy-url` indica la carpeta bajo la cual nuestra aplicación encontrará los recursos necesarios para su ejecución
 
@@ -40,3 +43,8 @@ $ git push -u origin master
 ```
 > Información extraida de una pregunta en stackoverflow
 > https://stackoverflow.com/questions/18935539/authenticate-with-github-using-a-token
+
+
+## Deploy to Github Pages
+
+Siguiendo la guia de https://angular.io/guide/deployment

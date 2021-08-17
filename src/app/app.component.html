@@ -1,37 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.5">
-  <title>{GetTitle()}</title>
-  <style>
-    input {
-      width: 70%;
-    }
+  <div class="row">
 
-    textarea {
-      width: 80%;
-      height: 40rem;
-    }
-  </style>
+    <div class="one-half column">
+      <label for="abcd">TOKEN</label>
+      <input id="abcd" type="text" [value]="token_value" #token class="u-full-width">
 
+      <label for=""> REFRESH TOKEN</label>
+      <input type="text" [value]="refresh_token" #refreshToken class="u-full-width">
+    </div>
 
-</head>
+    <div class="one-half column">
+      <select #suser name="user" id="id-user" (change)="UpdateUsuario(suser.value)" class="u-full-width">
+        <option value="ALEJO">Alejo Traslado</option>
+        <option selected value="CONTRIBUYENTE_FISICO@HOTMAIL.COM">CONTRIBUYENTE_FISICO@HOTMAIL.COM</option>
+        <option value="coordinador_desarrollo_urbano@hotmail.com">coordinador_desarrollo_urbano@hotmail.com</option>
+      </select>
+      <label for="id-user">User: </label>
+      <input #user type="text" name="user" id="id-user" [value]="usuario | uppercase" class="u-full-width">
+      <label for="id-user">Pass: </label>
+      <input #pass type="password" name="pass" id="id-pass" value="123456" class="u-full-width">
 
-<body>
+      <select #text_url_login name="uris" id="" class="u-full-width">
+        <option value="http://genusserver.com/ws/gnsaplication/login/auth">Genus</option>
+        <option selected value="http://genusserver.com:8283/wsauthorization/saiglogin/auth">SAIG</option>
+      </select>
+      <button class="u-full-width" (click)="peticionLogin(text_url_login.value)">Go</button>
+    </div>
 
-  <label for="">TOKEN</label>
-  <input type="text" [value]="token_value" #token>
-  <div></div>
-  <label for=""> REFRESH TOKEN</label>
-  <input type="text" [value]="refresh_token" #refreshToken>
-
-  <p></p>
+  </div>
 
   <div class="container">
-
     <div class="urls">
       <input #text_url_GET type="text"
         value='http://94.74.69.84/ws/huixquilucantd/trasladodominio/consultas/propietario?usuario=ANGEL&accion=nuevo_propietario'>
@@ -39,21 +37,7 @@
     </div>
 
     <div class="login">
-      <select #suser name="user" id="id-user" (change)="UpdateUsuario(suser.value)">
-        <option value="ALEJO">Alejo Traslado</option>
-        <option selected value="CONTRIBUYENTE_FISICO@HOTMAIL.COM">CONTRIBUYENTE_FISICO@HOTMAIL.COM</option>
-        <option value="coordinador_desarrollo_urbano@hotmail.com">coordinador_desarrollo_urbano@hotmail.com</option>
-      </select>
-      <label for="id-user">User: </label>
-      <input #user type="text" name="user" id="id-user" [value]="usuario | uppercase">
-      <label for="id-user">Pass: </label>
-      <input #pass type="password" name="pass" id="id-pass" value="123456">
 
-      <select #text_url_login name="uris" id="">
-        <option value="http://genusserver.com/ws/gnsaplication/login/auth">Genus</option>
-        <option selected value="http://genusserver.com:8283/wsauthorization/saiglogin/auth">SAIG</option>
-      </select>
-      <button (click)="peticionLogin(text_url_login.value)">Go</button>
     </div>
 
   </div>
@@ -85,7 +69,9 @@
   <button (click)="PeticionPostJSON(text_url_post.value, token.value)">Go</button> -->
 
   <br>
-  <div style="height: 600px; overflow-y: auto;"><pre><code >{{GetData()}}</code></pre></div>
+  <div style="height: 600px; overflow-y: auto;">
+    <pre><code >{{GetData()}}</code></pre>
+  </div>
 
   <!-- <pre><code class="language-python">
     {{pythonCode()}}
@@ -109,6 +95,3 @@
   <button (click)="{DownloadByteArray()}">Download</button>
  -->
   <!-- <textarea #result [value]="byteArray.toString()"></textarea> -->
-</body>
-
-</html>

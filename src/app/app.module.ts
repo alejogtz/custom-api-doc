@@ -5,10 +5,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TokenInterceptorService } from './Interceptors/token-interceptor.service';
+import { PrincipalComponent } from './principal/principal.component';
+import { ApidocComponent } from './components/apidoc/apidoc.component';
+import { CastPipe } from './pipes/cast.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PrincipalComponent,
+    ApidocComponent,
+    CastPipe
   ],
   imports: [
     BrowserModule,
@@ -19,6 +25,6 @@ import { TokenInterceptorService } from './Interceptors/token-interceptor.servic
     
     //{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [PrincipalComponent]
 })
 export class AppModule { }

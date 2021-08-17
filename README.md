@@ -33,9 +33,10 @@ Especificamente ocurria con esta linea de codigo.
 
 ## Github Authentication
 
-  $ git remote set-url origin https://alejogtz:<token>@github.com/alejogtz/custom-api-doc.git
+```git
+$ git remote set-url origin https://alejogtz:<token>@github.com/alejogtz/custom-api-doc.git
 
-  $ git push -u origin master
-
+$ git push -u origin master
+```
 > Información extraida de una pregunta en stackoverflow
 > https://stackoverflow.com/questions/18935539/authenticate-with-github-using-a-token

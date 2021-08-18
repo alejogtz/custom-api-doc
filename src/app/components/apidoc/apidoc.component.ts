@@ -11,6 +11,9 @@ export class ApidocComponent implements OnInit {
   @ViewChild('ourl') Url: ElementRef;
   @ViewChild('Token') IsToken: ElementRef;
 
+  @ViewChild('valor') variable_valor: ElementRef;
+
+
   @ViewChild('infoextra') infoextra: ElementRef;
   @ViewChild('descripcion') descripcion: ElementRef;
   @ViewChild('corta') corta: ElementRef;
@@ -32,21 +35,69 @@ export class ApidocComponent implements OnInit {
   SearchParams: URIParam[];
   BodyParams: URIParam[];
 
-  EjemplosRespuestas: EjemploRespuesta[];
-
   public CurrentUrl: URL;
-
-  serie: number = 0;
 
   active: number = 1;
   constructor() {
     this.UriParams = [];
     this.SearchParams = [];
-    this.EjemplosRespuestas = [];
   }
 
   ngOnInit(): void {
   }
+
+  OnImportDataChange(){
+    this.corta.nativeElement.value = this.obj.descripcion_titulo;
+    this.descripcion.nativeElement.value = this.obj.descripcion;
+    this.infoextra.nativeElement.value = this.obj.informacion_extra;
+
+    this.Method.nativeElement.value = this.obj.metodo.toUpperCase();
+    this.Url.nativeElement.value = 
+    `${new URL(this.variable_valor.nativeElement.value).protocol}//${new URL(this.variable_valor.nativeElement.value).host}${this.obj.titulo}`;
+
+    this.BodyParams = this.obj.parametros_body;
+    this.UriParams = this.obj.parametros_uri;
+    this.SearchParams = this.obj.parametros_query;
+
+    this.httpsample.nativeElement.value = this.obj.ejemplos_http[0] || '';
+    this.jsexample.nativeElement.value = this.obj.ejemplos_javascript[0] || '';
+
+    this.okresponse.nativeElement.value = this.obj.ejemplos_respuestas
+    .find( o=> o.codigo ==200)?.data;
+    this.badresponse.nativeElement.value = this.obj.ejemplos_respuestas
+    .find( o=> o.codigo ==400)?.data;
+
+    this.JsonBody.nativeElement.value = this.obj.body_post;
+    this.sqlsample.nativeElement.value = this.obj.sql_function;
+
+  }
+
+  Clean(){
+
+    this.obj = {} as Resultado;
+
+    this.corta.nativeElement.value = '';
+    this.descripcion.nativeElement.value = '';
+    this.infoextra.nativeElement.value = '';
+
+    this.Method.nativeElement.value = 'GET';
+    this.Url.nativeElement.value = '';
+
+    this.BodyParams = [];
+    this.UriParams = [];
+    this.SearchParams = [];
+
+    this.httpsample.nativeElement.value = '';
+    this.jsexample.nativeElement.value = '';
+
+    this.sqlsample.nativeElement.value = '';
+    this.JsonBody.nativeElement.value = '';
+
+    this.okresponse.nativeElement.value = '';
+    this.badresponse.nativeElement.value = '';
+
+  }
+
 
   GenerarJson() {
     this.resultadofinal = JSON.parse(this.dynamic_text());
@@ -73,7 +124,9 @@ export class ApidocComponent implements OnInit {
 
     this.CurrentUrl = myUrl;
 
-    this.UriParams = this.CurrentUrl.pathname.split('/').filter(o => decodeURI(o).startsWith('{'))
+    this.UriParams = this.CurrentUrl.pathname
+      .split('/')
+      .filter(o => decodeURI(o).startsWith('{'))
       .map((o: string) => {
         return {
           uuid: this.uuidv4(),
@@ -197,8 +250,10 @@ export class ApidocComponent implements OnInit {
     fr.onload =  () => {
       const txt = fr.result as string;
       this.obj = (JSON.parse(txt) as Resultado);
-    };
 
+      this.OnImportDataChange();
+
+    };
   }
 
   dynamic_text(): string {
@@ -213,16 +268,27 @@ export class ApidocComponent implements OnInit {
       descripcion: this.descripcion.nativeElement.value,
       token: this.IsToken.nativeElement.checked,
       informacion_extra: this.infoextra.nativeElement.value,
-      ejemplos_http: [(this.httpsample.nativeElement.value as string)],
-      ejemplos_javascript: [this.jsexample.nativeElement.value, this.jsexample.nativeElement.value, otroexample],
+
+      body_post : this.JsonBody.nativeElement.value || '',
+      sql_function: this.sqlsample.nativeElement.value || '',
+
+      parametros_uri: this.UriParams,
       parametros_body: this.BodyParams,
       parametros_query: this.SearchParams,
+
+      ejemplos_http: [(this.httpsample.nativeElement.value as string)]
+      .filter(str=>str.trim() != ''),
+
+      ejemplos_javascript: [this.jsexample.nativeElement.value, 
+        this.jsexample.nativeElement.value, otroexample]
+        .filter(str=>str.trim() != ''),
+
+
       ejemplos_respuestas: [
         { codigo: 200, data: this.okresponse.nativeElement.value },
         { codigo: 400, data: this.badresponse.nativeElement.value },
         { codigo: 500, data: '{"mensaje": "ha ocurrido un error. consulte al administrador"}' },
-      ],
-      parametros_uri: this.UriParams
+      ].filter(str=>str.data.trim() != '')
     }
 
     return JSON.stringify(resultado);
@@ -269,6 +335,9 @@ export interface Resultado {
   ejemplos_http: string[];
   ejemplos_respuestas: EjemploRespuesta[];
   ejemplos_javascript: string[];
+
+  body_post: string;
+  sql_function: string;
 }
 
 export interface URIParam {

@@ -1,246 +1,445 @@
 <!-- <link rel="stylesheet" href="%BASE_REF%/assets/skeleton-tabs/skeleton-tabs.css"> -->
 <!-- <script src="/assets/skeleton-tabs/skeleton-tabs.js"></script> -->
 
-
 <div class="container">
-
-    <div class="row">
-        <div class="four columns">
-            <label for="descripcion-corta">Descripcion Corta</label>
-            <input #corta class="u-full-width" type="text" id="descripcion-corta" />
-        </div>
-        <div class="five columns">
-            <label for="descripcion">Descripcion</label>
-            <input #descripcion class="u-full-width" type="text" id="descripcion" />
-        </div>
-        <div class="five columns">
-            <label for="infoextra">Informacion extra</label>
-            <input #infoextra class="u-full-width" type="text" id="infoextra" />
-        </div>
+  <div class="row">
+    <div class="four columns">
+      <label for="descripcion-corta">Descripcion Corta</label>
+      <input
+        #corta
+        class="u-full-width"
+        type="text"
+        id="descripcion-corta"
+      />
     </div>
-
-    <div class="row">
-        <div class="three columns">
-            <label for="Variable">Variable</label>
-            <input #variablee class="u-full-width" type="text" [value]="GetDefault('saig-debug')" id="Variable" />
-        </div>
-        <div class="four columns">
-            <label for="Value">Value</label>
-            <input #valor class="u-full-width" type="url" value="https://genusserver.com:8083/wssaig"
-                placeholder="https://genusserver.com:8083/wssaig" id="URL" />
-        </div>
-        <div class="one column">
-            <span>.</span>
-            <button class="u-center-abs"
-                (click)="ourl.value = replacee(ourl.value, variablee.value, valor.value)">Replace</button>
-        </div>
-
+    <div class="five columns">
+      <label for="descripcion">Descripcion</label>
+      <input
+        #descripcion
+        class="u-full-width"
+        type="text"
+        id="descripcion"
+      />
     </div>
-
-    <div class="row">
-        <div class="two columns">
-            <label for="Method">Method</label>
-            <select class="u-full-width" id="Method" #Method>
-                <option value="GET" selected>GET</option>
-                <option value="POST">POST</option>
-            </select>
-        </div>
-        <div class="ten columns">
-            <label for="URL-2">Enter URL</label>
-            <input #ourl class="u-full-width" type="text" placeholder="genusserver.com:8083/" id="URL-2">
-        </div>
-        <div class="four columns">
-            <label class="need-token u-center-abs">
-                <input type="checkbox" checked #Token>
-                <span class="label-body">Is token Neccessary??</span>
-            </label>
-        </div>
-        <div class="two columns">
-            <button class="button-primary" (click)="GenerateAPI()">GO</button>
-        </div>
-
+    <div class="five columns">
+      <label for="infoextra">Informacion extra</label>
+      <input
+        #infoextra
+        class="u-full-width"
+        type="text"
+        id="infoextra"
+      />
     </div>
+  </div>
 
+  <div class="row">
+    <div class="three columns">
+      <label for="Variable">Variable</label>
+      <input
+        #variablee
+        class="u-full-width"
+        type="text"
+        [value]="GetDefault('saig-debug')"
+        id="Variable"
+      />
+    </div>
+    <div class="four columns">
+      <label for="Value">Value</label>
+      <input
+        #valor
+        class="u-full-width"
+        type="url"
+        value="https://genusserver.com:8083/wssaig"
+        placeholder="https://genusserver.com:8083/wssaig"
+        id="URL"
+      />
+    </div>
+    <div class="one column">
+      <span>.</span>
+      <button
+        class="u-center-abs"
+        (click)="
+          ourl.value = replacee(ourl.value, variablee.value, valor.value)
+        "
+      >
+        Replace
+      </button>
+    </div>
+  </div>
 
+  <div class="row">
+    <div class="two columns">
+      <label for="Method">Method</label>
+      <select class="u-full-width" id="Method" #Method>
+        <option
+          value="GET"
+        >
+          GET
+        </option>
+        <option
+          value="POST"
+        >
+          POST
+        </option>
+      </select>
+    </div>
+    <div class="ten columns">
+      <label for="URL-2">Enter URL</label>
+      <input
+        #ourl
+        class="u-full-width"
+        type="text"
+        placeholder="genusserver.com:8083/"
+        id="URL-2"
+      />
+    </div>
+    <div class="four columns">
+      <label class="need-token u-center-abs">
+        <input type="checkbox" checked #Token />
+        <span class="label-body">Is token Neccessary??</span>
+      </label>
+    </div>
+    <div class="two columns">
+      <button class="button-primary" (click)="GenerateAPI()">GO</button>
+    </div>
+    <div class="two columns">
+        <button (click)="Clean()">Limpiar</button>
+      </div>
+  </div>
 </div>
 <!-- TABS -->
 
 <ul class="tab-nav">
-    <li>
-        <a [class.active]="active === 1" class="button" (click)="active = 1">URI Params</a>
-    </li>
-    <li>
-        <a [class.active]="active === 2" class="button" (click)="active = 2">Search params</a>
-    </li>
-    <li>
-        <a [class.active]="active === 3" class="button" (click)="active = 3">Body Params</a>
-    </li>
-    <li>
-        <a [class.active]="active === 5" class="button" (click)="active = 5">Body and Samples</a>
-    </li>
-    <li>
-        <a [class.active]="active === 4" class="button" (click)="active = 4">Ver Resultado</a>
-    </li>
-
+  <li>
+    <a [class.active]="active === 1" class="button" (click)="active = 1"
+      >URI Params</a
+    >
+  </li>
+  <li>
+    <a [class.active]="active === 2" class="button" (click)="active = 2"
+      >Search params</a
+    >
+  </li>
+  <li>
+    <a [class.active]="active === 3" class="button" (click)="active = 3"
+      >Body Params</a
+    >
+  </li>
+  <li>
+    <a [class.active]="active === 5" class="button" (click)="active = 5"
+      >Body and Samples</a
+    >
+  </li>
+  <li>
+    <a [class.active]="active === 4" class="button" (click)="active = 4"
+      >Ver Resultado</a
+    >
+  </li>
 </ul>
 <div class="tab-content">
-    <div [class.active]="active === 1" class="tab-pane" id="one">
-        <table class="u-full-width">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Descripcion</th>
-                    <th>Información Extra</th>
-                    <th>Obligatorio</th>
-                    <th>Buttons</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let _param of UriParams; let i = index">
-                    <td>{{i}}</td>
-                    <td><input #txtname (change)="_param.nombre = txtname.value" [value]="_param.nombre"
-                            class="u-full-width" type="text"></td>
-                    <td><input #txttipo (change)="_param.tipo = txttipo.value" [value]="_param.tipo"
-                            class="u-full-width" type="text"></td>
-                    <td><input #txtdescripcion (change)="_param.descripcion = txtdescripcion.value"
-                            [value]="_param.descripcion" class="u-full-width" type="text"></td>
-                    <td><input #txtinfoextra (change)="_param.extra_info = txtinfoextra.value"
-                            [value]="_param.extra_info" class="u-full-width" type="text"></td>
-                    <td><input #txtobligatorio (change)="_param.obligatorio = txtobligatorio.checked"
-                            [checked]="_param.obligatorio" class="u-full-width" type="checkbox"></td>
-                    <button (click)="DeleteUriParam(_param)">-</button>
-                </tr>
-            </tbody>
-        </table>
+  <div [class.active]="active === 1" class="tab-pane" id="one">
+    <table class="u-full-width">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Descripcion</th>
+          <th>Información Extra</th>
+          <th>Obligatorio</th>
+          <th>Buttons</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let _param of UriParams; let i = index">
+          <td>{{ i }}</td>
+          <td>
+            <input
+              #txtname
+              (change)="_param.nombre = txtname.value"
+              [value]="_param.nombre"
+              class="u-full-width"
+              type="text"
+            />
+          </td>
+          <td>
+            <input
+              #txttipo
+              (change)="_param.tipo = txttipo.value"
+              [value]="_param.tipo"
+              class="u-full-width"
+              type="text"
+            />
+          </td>
+          <td>
+            <input
+              #txtdescripcion
+              (change)="_param.descripcion = txtdescripcion.value"
+              [value]="_param.descripcion"
+              class="u-full-width"
+              type="text"
+            />
+          </td>
+          <td>
+            <input
+              #txtinfoextra
+              (change)="_param.extra_info = txtinfoextra.value"
+              [value]="_param.extra_info"
+              class="u-full-width"
+              type="text"
+            />
+          </td>
+          <td>
+            <input
+              #txtobligatorio
+              (change)="_param.obligatorio = txtobligatorio.checked"
+              [checked]="_param.obligatorio"
+              class="u-full-width"
+              type="checkbox"
+            />
+          </td>
+          <button (click)="DeleteUriParam(_param)">-</button>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div [class.active]="active === 2" class="tab-pane" id="two">
+    <table class="u-full-width">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Descripcion</th>
+          <th>Información Extra</th>
+
+          <th>Obligatorio</th>
+          <th>Buttons</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let _param of SearchParams; let i = index">
+          <td>{{ i }}</td>
+          <td>
+            <input
+              #txtname
+              (change)="_param.nombre = txtname.value"
+              [value]="_param.nombre"
+              class="u-full-width"
+              type="text"
+              id="{{ _param.uuid }}"
+            />
+          </td>
+          <td>
+            <input
+              #txttipo
+              (change)="_param.tipo = txttipo.value"
+              [value]="_param.tipo"
+              class="u-full-width"
+              type="text"
+              id="{{ _param.uuid }}"
+            />
+          </td>
+          <td>
+            <input
+              #txtdescripcion
+              (change)="_param.descripcion = txtdescripcion.value"
+              [value]="_param.descripcion"
+              class="u-full-width"
+              type="text"
+              id="{{ _param.uuid }}"
+            />
+          </td>
+          <td>
+            <input
+              #txtinfoextra
+              (change)="_param.extra_info = txtinfoextra.value"
+              [value]="_param.extra_info"
+              class="u-full-width"
+              type="text"
+            />
+          </td>
+          <td>
+            <input
+              #txtobligatorio
+              (change)="_param.obligatorio = txtobligatorio.checked"
+              [checked]="_param.obligatorio"
+              class="u-full-width"
+              type="checkbox"
+              id="{{ _param.uuid }}"
+            />
+          </td>
+          <button (click)="DeleteUrlParam(_param)">-</button>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div [class.active]="active === 3" class="tab-pane" id="three">
+    <table class="u-full-width">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Descripcion</th>
+          <th>Información Extra</th>
+
+          <th>Obligatorio</th>
+          <th>Buttons</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let _param of BodyParams; let i = index">
+          <td>{{ i }}</td>
+          <td>
+            <input
+              #txtname
+              (change)="_param.nombre = txtname.value"
+              [value]="_param.nombre"
+              class="u-full-width"
+              type="text"
+              id="{{ _param.uuid }}"
+            />
+          </td>
+          <td>
+            <input
+              #txttipo
+              (change)="_param.tipo = txttipo.value"
+              [value]="_param.tipo"
+              class="u-full-width"
+              type="text"
+              id="{{ _param.uuid }}"
+            />
+          </td>
+          <td>
+            <input
+              #txtdescripcion
+              (change)="_param.descripcion = txtdescripcion.value"
+              [value]="_param.descripcion"
+              class="u-full-width"
+              type="text"
+              id="{{ _param.uuid }}"
+            />
+          </td>
+          <td>
+            <input
+              #txtinfoextra
+              (change)="_param.extra_info = txtinfoextra.value"
+              [value]="_param.extra_info"
+              class="u-full-width"
+              type="text"
+            />
+          </td>
+          <td>
+            <input
+              #txtobligatorio
+              (change)="_param.obligatorio = txtobligatorio.checked"
+              [checked]="_param.obligatorio"
+              class="u-full-width"
+              type="checkbox"
+              id="{{ _param.uuid }}"
+            />
+          </td>
+          <button (click)="DeleteBodyParam(_param)">-</button>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div [class.active]="active === 5" class="tab-pane" id="three">
+    <!-- TEXT AREAS -->
+    <div class="row h-72">
+      <div class="six columns h-full">
+        <label for="Body">JSON Body</label>
+        <textarea
+          #jsonbody
+          class="u-full-width h-56"
+          placeholder="{...}"
+          id="Body"
+        ></textarea>
+      </div>
+      <div class="six columns h-full">
+        <label for="httpsample">Http Example</label>
+        <textarea
+          #httpexample
+          class="u-full-width h-56"
+          placeholder="https://genusserver.com:8083/wssaig"
+          id="httpsample"
+        ></textarea>
+      </div>
+      <div class="six columns h-full">
+        <label for="Example">Javascript Example Fetch</label>
+        <textarea
+          #jsexample
+          class="u-full-width h-56"
+          placeholder="var let = x.ToString()"
+          id="Example"
+        ></textarea>
+      </div>
     </div>
-    <div [class.active]="active === 2" class="tab-pane" id="two">
-        <table class="u-full-width">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Descripcion</th>
-                    <th>Información Extra</th>
 
-                    <th>Obligatorio</th>
-                    <th>Buttons</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let _param of SearchParams; let i = index">
-                    <td>{{i}}</td>
-                    <td><input #txtname (change)="_param.nombre = txtname.value" [value]="_param.nombre"
-                            class="u-full-width" type="text" id="{{_param.uuid}}"></td>
-                    <td><input #txttipo (change)="_param.tipo = txttipo.value" [value]="_param.tipo"
-                            class="u-full-width" type="text" id="{{_param.uuid}}"></td>
-                    <td><input #txtdescripcion (change)="_param.descripcion = txtdescripcion.value"
-                            [value]="_param.descripcion" class="u-full-width" type="text" id="{{_param.uuid}}"></td>
-                    <td><input #txtinfoextra (change)="_param.extra_info = txtinfoextra.value"
-                            [value]="_param.extra_info" class="u-full-width" type="text"></td>
-                    <td><input #txtobligatorio (change)="_param.obligatorio = txtobligatorio.checked"
-                            [checked]="_param.obligatorio" class="u-full-width" type="checkbox" id="{{_param.uuid}}">
-                    </td>
-                    <button (click)="DeleteUrlParam(_param)">-</button>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div [class.active]="active === 3" class="tab-pane" id="three">
-        <table class="u-full-width">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Descripcion</th>
-                    <th>Información Extra</th>
-
-                    <th>Obligatorio</th>
-                    <th>Buttons</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let _param of BodyParams; let i = index">
-                    <td>{{i}}</td>
-                    <td><input #txtname (change)="_param.nombre = txtname.value" [value]="_param.nombre"
-                            class="u-full-width" type="text" id="{{_param.uuid}}"></td>
-                    <td><input #txttipo (change)="_param.tipo = txttipo.value" [value]="_param.tipo"
-                            class="u-full-width" type="text" id="{{_param.uuid}}"></td>
-                    <td><input #txtdescripcion (change)="_param.descripcion = txtdescripcion.value"
-                            [value]="_param.descripcion" class="u-full-width" type="text" id="{{_param.uuid}}"></td>
-                    <td><input #txtinfoextra (change)="_param.extra_info = txtinfoextra.value"
-                            [value]="_param.extra_info" class="u-full-width" type="text"></td>
-                    <td><input #txtobligatorio (change)="_param.obligatorio = txtobligatorio.checked"
-                            [checked]="_param.obligatorio" class="u-full-width" type="checkbox" id="{{_param.uuid}}">
-                    </td>
-                    <button (click)="DeleteBodyParam(_param)">-</button>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div [class.active]="active === 5" class="tab-pane" id="three">
-        <!-- TEXT AREAS -->
-        <div class="row h-72">
-            <div class="six columns h-full">
-                <label for="Body">JSON Body</label>
-                <textarea #jsonbody class="u-full-width h-56" placeholder="{...}" id="Body"></textarea>
-            </div>
-            <div class="six columns h-full">
-                <label for="httpsample">Http Example</label>
-                <textarea #httpexample class="u-full-width h-56" placeholder="https://genusserver.com:8083/wssaig"
-                    id="httpsample"></textarea>
-            </div>
-            <div class="six columns h-full">
-                <label for="Example">Javascript Example Fetch</label>
-                <textarea #jsexample class="u-full-width h-56" placeholder="var let = x.ToString()"
-                    id="Example"></textarea>
-            </div>
-
+    <div class="row">
+      <div class="six columns">
+        <label for="SQL">SQL Function</label>
+        <textarea
+          #sqlsample
+          class="u-full-width h-56"
+          placeholder="SELECT * FROM FN_TAB_."
+          id="SQL"
+        ></textarea>
+      </div>
+      <div class="row">
+        <div class="six columns">
+          <label for="apiresponse">200 OK Response</label>
+          <textarea
+            #okresponse
+            class="u-full-width h-23"
+            placeholder="{...}"
+            id="apiresponse"
+          ></textarea>
         </div>
-
-        <div class="row">
-            <div class="six columns">
-                <label for="SQL">SQL Function</label>
-                <textarea #sqlsample class="u-full-width h-56" placeholder="SELECT * FROM FN_TAB_." id="SQL"></textarea>
-            </div>
-            <div class="row">
-                <div class="six columns">
-                    <label for="apiresponse">200 OK Response</label>
-                    <textarea #okresponse class="u-full-width h-23" placeholder="{...}" id="apiresponse"></textarea>
-                </div>
-                <div class="six columns">
-                    <label for="badresponse">400 Bad Request Response</label>
-                    <textarea #badresponse class="u-full-width h-23" placeholder="{...}" id="badresponse"></textarea>
-                </div>
-            </div>
+        <div class="six columns">
+          <label for="badresponse">400 Bad Request Response</label>
+          <textarea
+            #badresponse
+            class="u-full-width h-23"
+            placeholder="{...}"
+            id="badresponse"
+          ></textarea>
         </div>
-
+      </div>
     </div>
+  </div>
 
-    <div [class.active]="active === 4" class="tab-pane" id="three">
-        <textarea #jsonresultado [value]="resultadofinal | json" id="resultado" class="u-full-width h-96"></textarea>
-    </div>
+  <div [class.active]="active === 4" class="tab-pane" id="three">
+    <textarea
+      #jsonresultado
+      [value]="resultadofinal | json"
+      id="resultado"
+      class="u-full-width h-96"
+    ></textarea>
+  </div>
 </div>
 
 <div class="row">
-    <!-- <div class="one column"><button (click)="Log()">Log</button></div> -->
+  <!-- <div class="one column"><button (click)="Log()">Log</button></div> -->
 
-    <div class="one column">
-        <label for="inputfile">
-            <input #me
-            type="file" name="inputfile" 
-            id="inputfile" (change)="LoadData(me.files)">
-        </label>
-    </div>
-    <div class="seven columns">.</div>
-    <div class="two columns">
-        <button (click)="GenerarJson()">Generar JSON</button>
-    </div>
-    <div class="two columns">
-        <button (click)="Descargar()" class="button-primary">Descargar</button>
-    </div>
+  <div class="one column">
+    <label for="inputfile">
+      <input
+        #me
+        type="file"
+        name="inputfile"
+        id="inputfile"
+        (change)="LoadData(me.files)"
+      />
+    </label>
+  </div>
+  <div class="seven columns">.</div>
+  <div class="two columns">
+    <button (click)="GenerarJson()">Generar JSON</button>
+  </div>
+  <div class="two columns">
+    <button (click)="Descargar()" class="button-primary">Descargar</button>
+  </div>
 </div>

@@ -47,7 +47,7 @@ $ git push -u origin master
 Siguiendo la guia de https://angular.io/guide/deployment
 ```bash
 // build project to docs dest folder and set `--base-href` as your project page url
-$  ng build --output-path docs --base-href https://alejogtz.github.io/custom-api-doc/
+$  ng build --prod --output-path docs --base-href https://alejogtz.github.io/custom-api-doc/
 
 // Push to gh-pages branch
 $ git add . && \

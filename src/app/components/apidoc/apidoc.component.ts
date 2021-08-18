@@ -10,19 +10,29 @@ export class ApidocComponent implements OnInit {
   @ViewChild('Method') Method: ElementRef;
   @ViewChild('ourl') Url: ElementRef;
   @ViewChild('Token') IsToken: ElementRef;
+
+  @ViewChild('infoextra') infoextra: ElementRef;
+  @ViewChild('descripcion') descripcion: ElementRef;
+  @ViewChild('corta') corta: ElementRef;
+
+  // TEXT AREAS
   @ViewChild('jsonbody') JsonBody: ElementRef;
+  @ViewChild('httpexample') httpsample: ElementRef;
+  @ViewChild('jsexample') jsexample: ElementRef;
+  @ViewChild('sqlsample') sqlsample: ElementRef;
+  @ViewChild('okresponse') okresponse: ElementRef;
+  @ViewChild('badresponse') badresponse: ElementRef;
 
-  @ViewChild('titulo') titulo: HTMLInputElement;
-  @ViewChild('descripcion') descripcion: HTMLInputElement;
-  @ViewChild('corta') corta: HTMLInputElement;
+  @ViewChild('jsonresultado') resultado: ElementRef;
+  resultadofinal: any = '';
 
-
-  @ViewChild('jsexample') jsexample: HTMLInputElement;
-
+  obj: Resultado;
 
   UriParams: URIParam[];
   SearchParams: URIParam[];
   BodyParams: URIParam[];
+
+  EjemplosRespuestas: EjemploRespuesta[];
 
   public CurrentUrl: URL;
 
@@ -32,19 +42,27 @@ export class ApidocComponent implements OnInit {
   constructor() {
     this.UriParams = [];
     this.SearchParams = [];
+    this.EjemplosRespuestas = [];
   }
 
   ngOnInit(): void {
   }
+
+  GenerarJson() {
+    this.resultadofinal = JSON.parse(this.dynamic_text());
+  }
+
   //#region Lo mero mero
   Descargar(): void {
-    this.download_file(this.GenerateNameFile(), this.dynamic_text());
+    // this.download_file(this.GenerateNameFile(), this.dynamic_text());
+    this.download_file(this.GenerateNameFile(), this.resultado.nativeElement.value);
   }
 
   GenerateNameFile(): string {
     return this.CurrentUrl.pathname
       .split('/')
       .filter(o => o != '')
+      .map(o => decodeURI(o))
       .join('-') + '.' + (this.Method.nativeElement.value as string).toLocaleLowerCase();
   }
 
@@ -55,10 +73,11 @@ export class ApidocComponent implements OnInit {
 
     this.CurrentUrl = myUrl;
 
-    this.UriParams = this.CurrentUrl.pathname.split('/').filter(o => o != '')
+    this.UriParams = this.CurrentUrl.pathname.split('/').filter(o => decodeURI(o).startsWith('{'))
       .map((o: string) => {
         return {
-          uuid: this.uuidv4(), nombre: o.toUpperCase(),
+          uuid: this.uuidv4(),
+          nombre: decodeURI(o).toUpperCase(),
           tipo: this.GetTipo(o), descripcion: '', extra_info: '', obligatorio: true
         };
       });
@@ -67,8 +86,10 @@ export class ApidocComponent implements OnInit {
 
     this.CurrentUrl.searchParams
       .forEach((value: string, key: string, search_params: URLSearchParams) => {
+
         this.SearchParams.push({
-          uuid: this.uuidv4(), nombre: key.toUpperCase(),
+          uuid: this.uuidv4(),
+          nombre: key.toString().toUpperCase(),
           tipo: this.GetTipo(search_params.get(key) || ''),
           descripcion: '',
           extra_info: '',
@@ -168,24 +189,39 @@ export class ApidocComponent implements OnInit {
   //#endregion
 
   //#region Generar File and descargar
-  dynamic_text(): string {
 
-    const otroexample = `${this.CurrentUrl.toString()}\n${this.JsonBody.nativeElement.value}`;
+  LoadData(file: FileList | null): void {
+    let files = file as FileList
+    const fr = new FileReader();
+    fr.readAsText(files[0]);
+    fr.onload =  () => {
+      const txt = fr.result as string;
+      this.obj = (JSON.parse(txt) as Resultado);
+    };
+
+  }
+
+  dynamic_text(): string {
+    let otroexample: string = '';
+    if (this.Method.nativeElement.value == 'POST')
+     otroexample = `${decodeURI(this.CurrentUrl.toString())}\n${this.JsonBody.nativeElement.value}`;
 
     const resultado: Resultado = {
       metodo: this.Method.nativeElement.value,
-      titulo: this.titulo.value,
-      descripcion_titulo: this.corta.value,
-      descripcion: this.descripcion.value,
+      titulo: decodeURI(this.CurrentUrl.pathname),
+      descripcion_titulo: this.corta.nativeElement.value,
+      descripcion: this.descripcion.nativeElement.value,
       token: this.IsToken.nativeElement.checked,
-      informacion_extra: 'Info Extra Pendiente',
-      ejemplos_http: [(this.JsonBody.nativeElement.value as string)
-        .replace(' ', '')
-        .replace('\n', '')
-        .replace('\t', '')],
-      ejemplos_javascript: [this.jsexample.value, otroexample],
+      informacion_extra: this.infoextra.nativeElement.value,
+      ejemplos_http: [(this.httpsample.nativeElement.value as string)],
+      ejemplos_javascript: [this.jsexample.nativeElement.value, this.jsexample.nativeElement.value, otroexample],
       parametros_body: this.BodyParams,
       parametros_query: this.SearchParams,
+      ejemplos_respuestas: [
+        { codigo: 200, data: this.okresponse.nativeElement.value },
+        { codigo: 400, data: this.badresponse.nativeElement.value },
+        { codigo: 500, data: '{"mensaje": "ha ocurrido un error. consulte al administrador"}' },
+      ],
       parametros_uri: this.UriParams
     }
 
@@ -231,6 +267,7 @@ export interface Resultado {
   parametros_query: URIParam[];
   parametros_body: URIParam[];
   ejemplos_http: string[];
+  ejemplos_respuestas: EjemploRespuesta[];
   ejemplos_javascript: string[];
 }
 
@@ -241,4 +278,9 @@ export interface URIParam {
   descripcion?: string;
   extra_info?: string;
   obligatorio: boolean;
+}
+
+export interface EjemploRespuesta {
+  codigo: number;
+  data: string;
 }

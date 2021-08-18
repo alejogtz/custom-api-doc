@@ -48,3 +48,18 @@ $ git push -u origin master
 ## Deploy to Github Pages
 
 Siguiendo la guia de https://angular.io/guide/deployment
+```bash
+// build project to docs dest folder and set `--base-href` as your project page url
+$  ng build --output-path docs --base-href https://alejogtz.github.io/custom-api-doc/
+
+// Push to gh-pages branch
+$ git add . && \
+  git commit -m 'Deployed to Gh-pages' && \
+  git push -u origin gh-pages:gh-pages &&
+```
+
+
+## Extensiones de VS
+
+* Utilicé esta extensión para el tema de las indentaciones que lucen muy bien :')
+  > https://marketplace.visualstudio.com/items?itemName=lmcarreiro.vscode-smart-column-indenter

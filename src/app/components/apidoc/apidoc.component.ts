@@ -26,6 +26,7 @@ export class ApidocComponent implements OnInit {
   @ViewChild('jsonresultado') resultado: ElementRef;
   resultadofinal: any = '';
 
+  obj: Resultado;
 
   UriParams: URIParam[];
   SearchParams: URIParam[];
@@ -188,9 +189,22 @@ export class ApidocComponent implements OnInit {
   //#endregion
 
   //#region Generar File and descargar
-  dynamic_text(): string {
 
-    const otroexample = `${decodeURI(this.CurrentUrl.toString())}\n${this.JsonBody.nativeElement.value}`;
+  LoadData(file: FileList | null): void {
+    let files = file as FileList
+    const fr = new FileReader();
+    fr.readAsText(files[0]);
+    fr.onload =  () => {
+      const txt = fr.result as string;
+      this.obj = (JSON.parse(txt) as Resultado);
+    };
+
+  }
+
+  dynamic_text(): string {
+    let otroexample: string = '';
+    if (this.Method.nativeElement.value == 'POST')
+     otroexample = `${decodeURI(this.CurrentUrl.toString())}\n${this.JsonBody.nativeElement.value}`;
 
     const resultado: Resultado = {
       metodo: this.Method.nativeElement.value,
@@ -199,8 +213,8 @@ export class ApidocComponent implements OnInit {
       descripcion: this.descripcion.nativeElement.value,
       token: this.IsToken.nativeElement.checked,
       informacion_extra: this.infoextra.nativeElement.value,
-      ejemplos_http: [(this.JsonBody.nativeElement.value as string)],
-      ejemplos_javascript: [this.httpsample.nativeElement.value, this.jsexample.nativeElement.value, otroexample],
+      ejemplos_http: [(this.httpsample.nativeElement.value as string)],
+      ejemplos_javascript: [this.jsexample.nativeElement.value, this.jsexample.nativeElement.value, otroexample],
       parametros_body: this.BodyParams,
       parametros_query: this.SearchParams,
       ejemplos_respuestas: [

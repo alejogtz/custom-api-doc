@@ -14,9 +14,8 @@
             <input #descripcion class="u-full-width" type="text" id="descripcion" />
         </div>
         <div class="five columns">
-            <label for="infoextra">Descripcion</label>
-            <input #infoextra class="u-full-width" 
-            type="text" id="infoextra" />
+            <label for="infoextra">Informacion extra</label>
+            <input #infoextra class="u-full-width" type="text" id="infoextra" />
         </div>
     </div>
 
@@ -228,7 +227,15 @@
 </div>
 
 <div class="row">
-    <div class="one column"><button (click)="Log()">Log</button></div>
+    <!-- <div class="one column"><button (click)="Log()">Log</button></div> -->
+
+    <div class="one column">
+        <label for="inputfile">
+            <input #me
+            type="file" name="inputfile" 
+            id="inputfile" (change)="LoadData(me.files)">
+        </label>
+    </div>
     <div class="seven columns">.</div>
     <div class="two columns">
         <button (click)="GenerarJson()">Generar JSON</button>

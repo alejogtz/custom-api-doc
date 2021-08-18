@@ -7,6 +7,12 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 })
 export class ApidocComponent implements OnInit {
 
+  public TAB_1: number = 1;
+  public TAB_2: number = 2;
+  public TAB_3: number = 3;
+  public TAB_4: number = 5;
+  public TAB_5: number = 4;
+
   @ViewChild('Method') Method: ElementRef;
   @ViewChild('ourl') Url: ElementRef;
   @ViewChild('Token') IsToken: ElementRef;
@@ -35,9 +41,7 @@ export class ApidocComponent implements OnInit {
   SearchParams: URIParam[];
   BodyParams: URIParam[];
 
-  public CurrentUrl: URL;
-
-  active: number = 1;
+  active: number = this.TAB_4;
   constructor() {
     this.UriParams = [];
     this.SearchParams = [];
@@ -52,8 +56,7 @@ export class ApidocComponent implements OnInit {
     this.infoextra.nativeElement.value = this.obj.informacion_extra;
 
     this.Method.nativeElement.value = this.obj.metodo.toUpperCase();
-    this.Url.nativeElement.value = 
-    `${new URL(this.variable_valor.nativeElement.value).protocol}//${new URL(this.variable_valor.nativeElement.value).host}${this.obj.titulo}`;
+    this.Url.nativeElement.value = this.obj.raw_url || `${new URL(this.variable_valor.nativeElement.value).protocol}//${new URL(this.variable_valor.nativeElement.value).host}${this.obj.titulo}`;
 
     this.BodyParams = this.obj.parametros_body;
     this.UriParams = this.obj.parametros_uri;
@@ -63,12 +66,12 @@ export class ApidocComponent implements OnInit {
     this.jsexample.nativeElement.value = this.obj.ejemplos_javascript[0] || '';
 
     this.okresponse.nativeElement.value = this.obj.ejemplos_respuestas
-    .find( o=> o.codigo ==200)?.data;
+    .find( o=> o.codigo ==200)?.data || '';
     this.badresponse.nativeElement.value = this.obj.ejemplos_respuestas
-    .find( o=> o.codigo ==400)?.data;
+    .find( o=> o.codigo ==400)?.data || '';
 
-    this.JsonBody.nativeElement.value = this.obj.body_post;
-    this.sqlsample.nativeElement.value = this.obj.sql_function;
+    this.JsonBody.nativeElement.value = this.obj.body_post || '';
+    this.sqlsample.nativeElement.value = this.obj.sql_function || '';
 
   }
 
@@ -76,7 +79,7 @@ export class ApidocComponent implements OnInit {
 
     this.obj = {} as Resultado;
 
-    this.corta.nativeElement.value = '';
+    // this.corta.nativeElement.value = '';
     this.descripcion.nativeElement.value = '';
     this.infoextra.nativeElement.value = '';
 
@@ -96,6 +99,9 @@ export class ApidocComponent implements OnInit {
     this.okresponse.nativeElement.value = '';
     this.badresponse.nativeElement.value = '';
 
+    this.resultadofinal = {} as Resultado;
+    this.active = this.TAB_4;
+
   }
 
 
@@ -110,7 +116,8 @@ export class ApidocComponent implements OnInit {
   }
 
   GenerateNameFile(): string {
-    return this.CurrentUrl.pathname
+    const aux = new URL(this.Url.nativeElement.value);
+    return aux.pathname
       .split('/')
       .filter(o => o != '')
       .map(o => decodeURI(o))
@@ -122,9 +129,7 @@ export class ApidocComponent implements OnInit {
 
     const myUrl = new URL(FullUrl);
 
-    this.CurrentUrl = myUrl;
-
-    this.UriParams = this.CurrentUrl.pathname
+    this.UriParams = myUrl.pathname
       .split('/')
       .filter(o => decodeURI(o).startsWith('{'))
       .map((o: string) => {
@@ -137,7 +142,7 @@ export class ApidocComponent implements OnInit {
 
     this.SearchParams = [];
 
-    this.CurrentUrl.searchParams
+    myUrl.searchParams
       .forEach((value: string, key: string, search_params: URLSearchParams) => {
 
         this.SearchParams.push({
@@ -194,7 +199,9 @@ export class ApidocComponent implements OnInit {
     for (const o in json_data) {
       let aux: URIParam = {
         uuid: this.uuidv4(), nombre: o.toUpperCase(),
-        tipo: this.GetTipo(json_data[o].toString()), descripcion: '',
+        tipo: this.GetTipo(json_data[o].toString()), 
+        descripcion: '',        
+        extra_info: '',
         obligatorio: true
       };
       result.push(aux);
@@ -214,8 +221,10 @@ export class ApidocComponent implements OnInit {
   GetTipo(valor: string): string {
     if (valor.toUpperCase() == "TRUE" || valor.toUpperCase() == "FALSE")
       return "bool"
-    else if (!isNaN(parseFloat(valor)) || !isNaN(parseInt(valor)))
+    else if (valor.match("^[0-9]+$"))
       return "int"
+    else if (!isNaN(parseFloat(valor)))
+      return "double"
     else
       return "string"
   }
@@ -234,11 +243,6 @@ export class ApidocComponent implements OnInit {
   }`;
   }
 
-
-  GetCorrectUrl() {
-    return `${this.CurrentUrl.protocol}://${this.CurrentUrl.hostname}`;
-  }
-
   //#endregion
 
   //#region Generar File and descargar
@@ -251,19 +255,23 @@ export class ApidocComponent implements OnInit {
       const txt = fr.result as string;
       this.obj = (JSON.parse(txt) as Resultado);
 
+      this.resultadofinal= this.obj;
+
       this.OnImportDataChange();
 
     };
   }
 
   dynamic_text(): string {
+    const aux = new URL(this.Url.nativeElement.value);
+
     let otroexample: string = '';
     if (this.Method.nativeElement.value == 'POST')
-     otroexample = `${decodeURI(this.CurrentUrl.toString())}\n${this.JsonBody.nativeElement.value}`;
+     otroexample = `${decodeURI(aux.toString())}\n${this.JsonBody.nativeElement.value}`;
 
     const resultado: Resultado = {
       metodo: this.Method.nativeElement.value,
-      titulo: decodeURI(this.CurrentUrl.pathname),
+      titulo: decodeURI(new URL(this.Url.nativeElement.value).pathname),
       descripcion_titulo: this.corta.nativeElement.value,
       descripcion: this.descripcion.nativeElement.value,
       token: this.IsToken.nativeElement.checked,
@@ -271,6 +279,7 @@ export class ApidocComponent implements OnInit {
 
       body_post : this.JsonBody.nativeElement.value || '',
       sql_function: this.sqlsample.nativeElement.value || '',
+      raw_url: this.Url.nativeElement.value || '',
 
       parametros_uri: this.UriParams,
       parametros_body: this.BodyParams,
@@ -279,8 +288,7 @@ export class ApidocComponent implements OnInit {
       ejemplos_http: [(this.httpsample.nativeElement.value as string)]
       .filter(str=>str.trim() != ''),
 
-      ejemplos_javascript: [this.jsexample.nativeElement.value, 
-        this.jsexample.nativeElement.value, otroexample]
+      ejemplos_javascript: [this.jsexample.nativeElement.value,otroexample]
         .filter(str=>str.trim() != ''),
 
 
@@ -338,14 +346,15 @@ export interface Resultado {
 
   body_post: string;
   sql_function: string;
+  raw_url: string;
 }
 
 export interface URIParam {
   uuid: string;
   nombre: string;
   tipo: string;
-  descripcion?: string;
-  extra_info?: string;
+  descripcion: string;
+  extra_info: string;
   obligatorio: boolean;
 }
 

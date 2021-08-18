@@ -2,35 +2,6 @@
 <!-- <script src="/assets/skeleton-tabs/skeleton-tabs.js"></script> -->
 
 <div class="container">
-  <div class="row">
-    <div class="four columns">
-      <label for="descripcion-corta">Descripcion Corta</label>
-      <input
-        #corta
-        class="u-full-width"
-        type="text"
-        id="descripcion-corta"
-      />
-    </div>
-    <div class="five columns">
-      <label for="descripcion">Descripcion</label>
-      <input
-        #descripcion
-        class="u-full-width"
-        type="text"
-        id="descripcion"
-      />
-    </div>
-    <div class="five columns">
-      <label for="infoextra">Informacion extra</label>
-      <input
-        #infoextra
-        class="u-full-width"
-        type="text"
-        id="infoextra"
-      />
-    </div>
-  </div>
 
   <div class="row">
     <div class="three columns">
@@ -66,7 +37,38 @@
       </button>
     </div>
   </div>
+</div>
 
+  <div class="row">
+    <div class="three columns">
+      <label for="descripcion-corta">Descripcion Corta</label>
+      <input
+        #corta
+        class="u-full-width"
+        type="text"
+        id="descripcion-corta"
+      />
+    </div>
+    <div class="five columns">
+      <label for="descripcion">Descripcion</label>
+      <input
+        #descripcion
+        class="u-full-width"
+        type="text"
+        id="descripcion"
+      />
+    </div>
+    <div class="four columns">
+      <label for="infoextra">Informacion extra</label>
+      <input
+        #infoextra
+        class="u-full-width"
+        type="text"
+        id="infoextra"
+      />
+    </div>
+  </div>
+<div class="container">
   <div class="row">
     <div class="two columns">
       <label for="Method">Method</label>
@@ -87,11 +89,24 @@
       <label for="URL-2">Enter URL</label>
       <input
         #ourl
+        style="border-color:rgba(239, 68, 68, 0.5);"
         class="u-full-width"
         type="text"
         placeholder="genusserver.com:8083/"
         id="URL-2"
       />
+    </div>
+    <div class="six columns h-full">
+      <label for="Body">JSON Body</label>
+      <textarea
+        #jsonbody
+        class="u-full-width h-56"
+        placeholder="{...}"
+        id="Body"
+      ></textarea>
+    </div>
+    <div class="two columns">
+      <button class="button-primary" (click)="GenerateAPI()">GO</button>
     </div>
     <div class="four columns">
       <label class="need-token u-center-abs">
@@ -99,12 +114,6 @@
         <span class="label-body">Is token Neccessary??</span>
       </label>
     </div>
-    <div class="two columns">
-      <button class="button-primary" (click)="GenerateAPI()">GO</button>
-    </div>
-    <div class="two columns">
-        <button (click)="Clean()">Limpiar</button>
-      </div>
   </div>
 </div>
 <!-- TABS -->
@@ -303,8 +312,8 @@
           </td>
           <td>
             <input
-              #txttipo
-              (change)="_param.tipo = txttipo.value"
+              #txttipobody
+              (change)="_param.tipo = txttipobody.value"
               [value]="_param.tipo"
               class="u-full-width"
               type="text"
@@ -313,8 +322,8 @@
           </td>
           <td>
             <input
-              #txtdescripcion
-              (change)="_param.descripcion = txtdescripcion.value"
+              #txtdescripcionbody
+              (change)="_param.descripcion = txtdescripcionbody.value"
               [value]="_param.descripcion"
               class="u-full-width"
               type="text"
@@ -323,8 +332,8 @@
           </td>
           <td>
             <input
-              #txtinfoextra
-              (change)="_param.extra_info = txtinfoextra.value"
+              #txtinfoextrabody
+              (change)="_param.extra_info = txtinfoextrabody.value"
               [value]="_param.extra_info"
               class="u-full-width"
               type="text"
@@ -348,20 +357,12 @@
 
   <div [class.active]="active === 5" class="tab-pane" id="three">
     <!-- TEXT AREAS -->
-    <div class="row h-72">
-      <div class="six columns h-full">
-        <label for="Body">JSON Body</label>
-        <textarea
-          #jsonbody
-          class="u-full-width h-56"
-          placeholder="{...}"
-          id="Body"
-        ></textarea>
-      </div>
+    <div class="row h-72">      
       <div class="six columns h-full">
         <label for="httpsample">Http Example</label>
         <textarea
           #httpexample
+          style="border-color:rgba(239, 68, 68, 0.5);"
           class="u-full-width h-56"
           placeholder="https://genusserver.com:8083/wssaig"
           id="httpsample"
@@ -393,6 +394,7 @@
           <label for="apiresponse">200 OK Response</label>
           <textarea
             #okresponse
+            style="border-color:rgba(239, 68, 68, 0.5);"
             class="u-full-width h-23"
             placeholder="{...}"
             id="apiresponse"
@@ -435,7 +437,10 @@
       />
     </label>
   </div>
-  <div class="seven columns">.</div>
+  <div class="five columns">.</div>
+  <div class="two columns">
+    <button (click)="Clean()">Limpiar</button>
+  </div>
   <div class="two columns">
     <button (click)="GenerarJson()">Generar JSON</button>
   </div>

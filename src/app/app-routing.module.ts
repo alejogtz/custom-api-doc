@@ -7,7 +7,7 @@ import { UtilsAppsComponent } from './components/utils-apps/utils-apps.component
 const routes: Routes = [
   {path: '', pathMatch: 'full', redirectTo: 'ApiDoc'},
   {path: 'Token', component: AppComponent},
-  {path: 'ApiDoc', component: ApidocComponent}
+  {path: 'ApiDoc', component: ApidocComponent},
   {path: 'Utils', component: UtilsAppsComponent}
   
 ];

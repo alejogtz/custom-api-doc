@@ -3,7 +3,12 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 @Component({
   selector: 'app-apidoc',
   templateUrl: './apidoc.component.html',
-  styleUrls: ['./apidoc.component.css']
+  styleUrls: [
+    './apidoc.component.css',
+  //  '../../../assets/css/customs.css',
+  //  '../../../assets/skeleton-tabs-xd/skeleton-tabs.css',
+  //  '../../../assets/skeleton-tabs-xd/css/skeleton.css'
+  ]
 })
 export class ApidocComponent implements OnInit {
 

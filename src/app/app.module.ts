@@ -9,6 +9,7 @@ import { PrincipalComponent } from './principal/principal.component';
 import { ApidocComponent } from './components/apidoc/apidoc.component';
 import { CastPipe } from './pipes/cast.pipe';
 import { UtilsAppsComponent } from './components/utils-apps/utils-apps.component';
+import { NavigationComponent } from './shared/components/navigation/navigation.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { UtilsAppsComponent } from './components/utils-apps/utils-apps.component
     PrincipalComponent,
     ApidocComponent,
     CastPipe,
-    UtilsAppsComponent
+    UtilsAppsComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,

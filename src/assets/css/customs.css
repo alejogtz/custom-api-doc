@@ -33,3 +33,7 @@
 .h-screen	{height: 100vh;   }
 
 .border-red-500 {border-color: rgba(239, 68, 68, 0.5);}
+
+button:active {
+    background-color: gainsboro;
+}

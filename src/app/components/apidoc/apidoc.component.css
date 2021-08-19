@@ -4,6 +4,8 @@
 @import  '../../../assets/skeleton-tabs-xd/skeleton-tabs.css';
 @import  '../../../assets/css/customs.css'; */
 
+@import  '../../../assets/css/switch.css';
+
 .column, .columns{
     margin-left: 10px;
 }

@@ -236,7 +236,6 @@
               [value]="_param.nombre"
               class="u-full-width"
               type="text"
-              id="{{ _param.uuid }}"
             />
           </td>
           <td>
@@ -246,7 +245,6 @@
               [value]="_param.tipo"
               class="u-full-width"
               type="text"
-              id="{{ _param.uuid }}"
             />
           </td>
           <td>
@@ -256,7 +254,6 @@
               [value]="_param.descripcion"
               class="u-full-width"
               type="text"
-              id="{{ _param.uuid }}"
             />
           </td>
           <td>
@@ -275,7 +272,6 @@
               [checked]="_param.obligatorio"
               class="u-full-width"
               type="checkbox"
-              id="{{ _param.uuid }}"
             />
           </td>
           <button (click)="DeleteUrlParam(_param)">-</button>
@@ -307,7 +303,6 @@
               [value]="_param.nombre"
               class="u-full-width"
               type="text"
-              id="{{ _param.uuid }}"
             />
           </td>
           <td>
@@ -317,7 +312,6 @@
               [value]="_param.tipo"
               class="u-full-width"
               type="text"
-              id="{{ _param.uuid }}"
             />
           </td>
           <td>
@@ -327,7 +321,6 @@
               [value]="_param.descripcion"
               class="u-full-width"
               type="text"
-              id="{{ _param.uuid }}"
             />
           </td>
           <td>
@@ -346,7 +339,6 @@
               [checked]="_param.obligatorio"
               class="u-full-width"
               type="checkbox"
-              id="{{ _param.uuid }}"
             />
           </td>
           <button (click)="DeleteBodyParam(_param)">-</button>
@@ -437,14 +429,28 @@
       />
     </label>
   </div>
-  <div class="five columns">.</div>
+  <div class="three columns">.</div>
   <div class="two columns">
     <button (click)="Clean()">Limpiar</button>
   </div>
   <div class="two columns">
+    <!-- Rounded switch -->
+    <label class="switch">
+      <!-- Nota. Por si solo marcar o desmaracar no cambia el DOM
+      El Log(hardmode.checked)
+     fuerza la actualizacion del DOM lo que hace que funcione los *ngIf o *ngFor :D-->
+      <input #hardmode type="checkbox" (change)="Log(hardmode.checked)">
+      <span class="slider round"></span>
+    </label>
+  </div>
+  <div class="two columns" *ngIf="hardmode.checked == true">
     <button (click)="GenerarJson()">Generar JSON</button>
   </div>
-  <div class="two columns">
+  <div class="two columns" *ngIf="hardmode.checked == true">
     <button (click)="Descargar()" class="button-primary">Descargar</button>
+  </div>
+
+  <div class="two columns" *ngIf="hardmode.checked == false">
+    <button (click)="DescargarTwoSteps()" class="button-primary">Descargar</button>
   </div>
 </div>

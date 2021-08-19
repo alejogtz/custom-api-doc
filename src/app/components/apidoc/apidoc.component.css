@@ -1,3 +1,9 @@
+/* @import '../../../assets/skeleton-tabs-xd/css/normalize.css';
+@import '../../../assets/skeleton-tabs-xd/css/skeleton.css'; */
+/* @import url('https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css');
+@import  '../../../assets/skeleton-tabs-xd/skeleton-tabs.css';
+@import  '../../../assets/css/customs.css'; */
+
 .column, .columns{
     margin-left: 10px;
 }

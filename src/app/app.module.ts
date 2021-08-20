@@ -8,13 +8,17 @@ import { TokenInterceptorService } from './Interceptors/token-interceptor.servic
 import { PrincipalComponent } from './principal/principal.component';
 import { ApidocComponent } from './components/apidoc/apidoc.component';
 import { CastPipe } from './pipes/cast.pipe';
+import { UtilsAppsComponent } from './components/utils-apps/utils-apps.component';
+import { NavigationComponent } from './shared/components/navigation/navigation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PrincipalComponent,
     ApidocComponent,
-    CastPipe
+    CastPipe,
+    UtilsAppsComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,

@@ -1,97 +1,133 @@
+<div class="row">
+  <div class="one-half column">
+    <label for="abcd">TOKEN</label>
+    <input
+      id="abcd"
+      type="text"
+      [value]="token_value"
+      #token
+      class="u-full-width"
+    />
 
-  <div class="row">
-
-    <div class="one-half column">
-      <label for="abcd">TOKEN</label>
-      <input id="abcd" type="text" [value]="token_value" #token class="u-full-width">
-
-      <label for=""> REFRESH TOKEN</label>
-      <input type="text" [value]="refresh_token" #refreshToken class="u-full-width">
-    </div>
-
-    <div class="one-half column">
-      <select #suser name="user" id="id-user" (change)="UpdateUsuario(suser.value)" class="u-full-width">
-        <option value="ALEJO">Alejo Traslado</option>
-        <option selected value="CONTRIBUYENTE_FISICO@HOTMAIL.COM">CONTRIBUYENTE_FISICO@HOTMAIL.COM</option>
-        <option value="coordinador_desarrollo_urbano@hotmail.com">coordinador_desarrollo_urbano@hotmail.com</option>
-      </select>
-      <label for="id-user">User: </label>
-      <input #user type="text" name="user" id="id-user" [value]="usuario | uppercase" class="u-full-width">
-      <label for="id-user">Pass: </label>
-      <input #pass type="password" name="pass" id="id-pass" value="123456" class="u-full-width">
-
-      <select #text_url_login name="uris" id="" class="u-full-width">
-        <option value="http://genusserver.com/ws/gnsaplication/login/auth">Genus</option>
-        <option selected value="http://genusserver.com:8283/wsauthorization/saiglogin/auth">SAIG</option>
-      </select>
-      <button class="u-full-width" (click)="peticionLogin(text_url_login.value)">Go</button>
-    </div>
-
+    <label for=""> REFRESH TOKEN</label>
+    <input
+      type="text"
+      [value]="refresh_token"
+      #refreshToken
+      class="u-full-width"
+    />
   </div>
 
-  <div class="container">
-    <div class="urls">
-      <input #text_url_GET type="text"
-        value='http://94.74.69.84/ws/huixquilucantd/trasladodominio/consultas/propietario?usuario=ANGEL&accion=nuevo_propietario'>
-      <button (click)="peticionGet(text_url_GET.value, token.value)">Go</button>
-    </div>
+  <div class="one-half column">
+    <select
+      #suser
+      name="user"
+      id="id-user"
+      (change)="UpdateUsuario(suser.value)"
+      class="u-full-width"
+    >
+      <option value="ALEJO">Alejo Traslado</option>
+      <option selected value="CONTRIBUYENTE_FISICO@HOTMAIL.COM">
+        CONTRIBUYENTE_FISICO@HOTMAIL.COM
+      </option>
+      <option value="coordinador_desarrollo_urbano@hotmail.com">
+        coordinador_desarrollo_urbano@hotmail.com
+      </option>
+    </select>
+    <label for="id-user">User: </label>
+    <input
+      #user
+      type="text"
+      name="user"
+      id="id-user"
+      [value]="usuario | uppercase"
+      class="u-full-width"
+    />
+    <label for="id-user">Pass: </label>
+    <input
+      #pass
+      type="password"
+      name="pass"
+      id="id-pass"
+      value="123456"
+      class="u-full-width"
+    />
 
-    <div class="login">
+    <select #text_url_login name="uris" id="" class="u-full-width">
+      <option value="http://genusserver.com/ws/gnsaplication/login/auth">
+        Genus
+      </option>
+      <option
+        selected
+        value="http://genusserver.com:8283/wsauthorization/saiglogin/auth"
+      >
+        SAIG
+      </option>
+    </select>
+    <button class="u-full-width" (click)="peticionLogin(text_url_login.value)">
+      Go
+    </button>
+  </div>
+</div>
 
-    </div>
-
+<div class="container">
+  <div class="urls">
+    <input
+      #text_url_GET
+      type="text"
+      value="http://94.74.69.84/ws/huixquilucantd/trasladodominio/consultas/propietario?usuario=ANGEL&accion=nuevo_propietario"
+    />
+    <button (click)="peticionGet(text_url_GET.value, token.value)">Go</button>
   </div>
 
-  <!-- GET REQUEST -->
+  <div class="login"></div>
+</div>
 
-  <!-- REFRESH TOKEN -->
+<!-- GET REQUEST -->
 
-  <label for="url-label">
-  </label>
-  <input #text_url_refresh type="text" value='http://genusserver.com/ws/gnsaplication/login/auth_refresh'>
+<!-- REFRESH TOKEN -->
 
-  <button (click)="peticionRefreshAuth(text_url_refresh.value, token.value, refreshToken.value)">Go</button>
-  <!-- <div>{{GetData()}}</div> -->
+<label for="url-label"> </label>
+<input
+  #text_url_refresh
+  type="text"
+  value="http://genusserver.com/ws/gnsaplication/login/auth_refresh"
+/>
 
-  <!-- LOGIN -->
+<button
+  (click)="
+    peticionRefreshAuth(text_url_refresh.value, token.value, refreshToken.value)
+  "
+>
+  Go
+</button>
+<!-- <div>{{GetData()}}</div> -->
 
-  <label for="url-label"></label>
-  <!-- <input #text_url_login type="text"
+<!-- LOGIN -->
+
+<label for="url-label"></label>
+<!-- <input #text_url_login type="text"
     value='http://genusserver.com/ws/gnsaplication/login/auth'> -->
 
-
-  <!-- POST JSON -->
-  <!-- 
+<!-- POST JSON -->
+<!-- 
   <label for="url-label"></label>
   <input #text_url_post type="text"
     value='http://94.74.69.84/ws/huixquilucantd/predial/descuentos_configurados'>
 
   <button (click)="PeticionPostJSON(text_url_post.value, token.value)">Go</button> -->
 
-  <br>
-  <div style="height: 600px; overflow-y: auto;">
-    <pre><code >{{GetData()}}</code></pre>
-  </div>
+<br />
+<div style="height: 600px; overflow-y: auto">
+  <pre><code >{{GetData()}}</code></pre>
+</div>
 
-  <!-- <pre><code class="language-python">
+<!-- <pre><code class="language-python">
     {{pythonCode()}}
   </code></pre> -->
 
-  <!-- <div><pre><code>{{_data | json}}</code></pre></div> -->
+<!-- <div><pre><code>{{_data | json}}</code></pre></div> -->
 
+<!-- <div><pre><code>{{_data | json}}</code></pre></div> -->
 
-  <!-- <div><pre><code>{{_data | json}}</code></pre></div> -->
-
-
-  <button (click)="ChangeData()">Change Text</button>
-  <!-- 
-  <tr></tr>
-
-  <input #archivo type="file" id="file" accept="image/*" width="300" height="300" (change)="upload($event)"/> -->
-  <!-- <textarea name="xd" id="xd" cols="100" rows="50"></textarea>
-
-
-  <button (click)="{CopytoClipboard()}">Copy to Clipboard</button>
-  <button (click)="{DownloadByteArray()}">Download</button>
- -->
-  <!-- <textarea #result [value]="byteArray.toString()"></textarea> -->
+<button (click)="ChangeData()">Change Text</button>

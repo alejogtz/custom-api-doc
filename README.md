@@ -33,7 +33,7 @@ Especificamente ocurria con esta linea de codigo.
 
 ## Github Authentication
 
-```git
+```bash
 $ git remote set-url origin https://alejogtz:<token>@github.com/alejogtz/custom-api-doc.git
 
 $ git push -u origin master
@@ -47,12 +47,14 @@ $ git push -u origin master
 Siguiendo la guia de https://angular.io/guide/deployment
 ```bash
 // build project to docs dest folder and set `--base-href` as your project page url
-$  ng build --prod --output-path docs --base-href https://alejogtz.github.io/custom-api-doc/
+$  ng build --prod \
+  --output-path docs \
+  --base-href https://alejogtz.github.io/custom-api-doc/
 
 // Push to gh-pages branch
 $ git add . && \
   git commit -m 'Deployed to Gh-pages' && \
-  git push -u origin gh-pages:gh-pages &&
+  git push origin gh-pages:gh-pages &&
 ```
 
 

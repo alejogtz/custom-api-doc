@@ -10,6 +10,7 @@ import { ApidocComponent } from './components/apidoc/apidoc.component';
 import { CastPipe } from './pipes/cast.pipe';
 import { UtilsAppsComponent } from './components/utils-apps/utils-apps.component';
 import { NavigationComponent } from './shared/components/navigation/navigation.component';
+import { CodesnippetgeneratorComponent } from './components/codesnippetgenerator/codesnippetgenerator.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NavigationComponent } from './shared/components/navigation/navigation.c
     ApidocComponent,
     CastPipe,
     UtilsAppsComponent,
-    NavigationComponent
+    NavigationComponent,
+    CodesnippetgeneratorComponent
   ],
   imports: [
     BrowserModule,

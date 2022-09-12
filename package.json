@@ -7,7 +7,7 @@
     "build": "ng build",
     "build:dev": "ng build --prod --base-href http://localhost/HttpRequests/ --deploy-url http://localhost/HttpRequests/ --output-path=/c/IISApps/HttpRequests",
     "build:gh-pages": "ng build --prod --output-path docs --base-href https://alejogtz.github.io/custom-api-doc/",
-    "deploy": "ng build --deploy --base-href=/custom-api-doc/",
+    "deploy": "ng build --prod --base-href=/custom-api-doc/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
